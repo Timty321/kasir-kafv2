@@ -1,0 +1,218 @@
+[
+  {
+    "id": "jd2zgonmoomn1b3uod",
+    "name": "Sayap",
+    "category": "Ayam Original",
+    "price": 9000,
+    "stock": 20,
+    "min_stock": 5,
+    "date": "2026-03-22"
+  },
+  {
+    "id": "7ceqj1fikoumn1b3uod",
+    "name": "Paha Bawah",
+    "category": "Ayam Original",
+    "price": 9500,
+    "stock": 18,
+    "min_stock": 5,
+    "date": "2026-03-22"
+  },
+  {
+    "id": "zym0mef1pn8mn1b3uod",
+    "name": "Dada",
+    "category": "Ayam Original",
+    "price": 10000,
+    "stock": 22,
+    "min_stock": 5,
+    "date": "2026-03-22"
+  },
+  {
+    "id": "zo7tmaifvepmn1b3uod",
+    "name": "Paha Atas",
+    "category": "Ayam Original",
+    "price": 10000,
+    "stock": 19,
+    "min_stock": 5,
+    "date": "2026-03-22"
+  },
+  {
+    "id": "n8p3r6gos8mn1b3uod",
+    "name": "Nasi + Sayap",
+    "category": "Paket Nasi + Ayam Original",
+    "price": 12000,
+    "stock": 25,
+    "min_stock": 5,
+    "date": "2026-03-22"
+  },
+  {
+    "id": "on964a3jpsmn1b3uod",
+    "name": "Nasi + Paha Bawah",
+    "category": "Paket Nasi + Ayam Original",
+    "price": 13000,
+    "stock": 23,
+    "min_stock": 5,
+    "date": "2026-03-22"
+  },
+  {
+    "id": "hkejamxtbsmn1b3uod",
+    "name": "Nasi + Dada",
+    "category": "Paket Nasi + Ayam Original",
+    "price": 14000,
+    "stock": 20,
+    "min_stock": 5,
+    "date": "2026-03-22"
+  },
+  {
+    "id": "6lzhguc98plmn1b3uod",
+    "name": "Nasi + Paha Atas",
+    "category": "Paket Nasi + Ayam Original",
+    "price": 14000,
+    "stock": 21,
+    "min_stock": 5,
+    "date": "2026-03-22"
+  },
+  {
+    "id": "jlmytj1eqzmn1b3uod",
+    "name": "Nasi + Sayap + Teh",
+    "category": "Paket Komplit",
+    "price": 15500,
+    "stock": 15,
+    "min_stock": 5,
+    "date": "2026-03-22"
+  },
+  {
+    "id": "zo4rx8lu5ycmn1b3uod",
+    "name": "Nasi + Paha Bawah + Teh",
+    "category": "Paket Komplit",
+    "price": 15500,
+    "stock": 14,
+    "min_stock": 5,
+    "date": "2026-03-22"
+  },
+  {
+    "id": "4ufvngjoz6mn1b3uod",
+    "name": "Nasi + Dada + Teh",
+    "category": "Paket Komplit",
+    "price": 17000,
+    "stock": 16,
+    "min_stock": 5,
+    "date": "2026-03-22"
+  },
+  {
+    "id": "mjms33u52q8mn1b3uod",
+    "name": "Nasi + Paha Atas + Teh",
+    "category": "Paket Komplit",
+    "price": 17000,
+    "stock": 15,
+    "min_stock": 5,
+    "date": "2026-03-22"
+  },
+  {
+    "id": "ft6ertuexy5mn1b3uod",
+    "name": "Sadas Sayap",
+    "category": "Sadas Cemplung & Sadas Mentai",
+    "price": 13000,
+    "stock": 12,
+    "min_stock": 3,
+    "date": "2026-03-22"
+  },
+  {
+    "id": "lgor46hsn8emn1b3uod",
+    "name": "Sadas Paha Bawah",
+    "category": "Sadas Cemplung & Sadas Mentai",
+    "price": 13000,
+    "stock": 10,
+    "min_stock": 3,
+    "date": "2026-03-22"
+  },
+  {
+    "id": "hmey256p29emn1b3uod",
+    "name": "Sadas Paha Atas",
+    "category": "Sadas Cemplung & Sadas Mentai",
+    "price": 15000,
+    "stock": 8,
+    "min_stock": 3,
+    "date": "2026-03-22"
+  },
+  {
+    "id": "m2fixquaq8mmn1b3uod",
+    "name": "Sadas Dada",
+    "category": "Sadas Cemplung & Sadas Mentai",
+    "price": 15000,
+    "stock": 9,
+    "min_stock": 3,
+    "date": "2026-03-22"
+  },
+  {
+    "id": "8lh3qo7pbsamn1b3uod",
+    "name": "Sadas Tambah Nasi",
+    "category": "Sadas Cemplung & Sadas Mentai",
+    "price": 4000,
+    "stock": 30,
+    "min_stock": 10,
+    "date": "2026-03-22"
+  },
+  {
+    "id": "oq0l68c4klrmn1b3uod",
+    "name": "Nasi Putih",
+    "category": "Menu Tambahan & Extra Topping",
+    "price": 4000,
+    "stock": 40,
+    "min_stock": 10,
+    "date": "2026-03-22"
+  },
+  {
+    "id": "hlhoz9w5owjmn1b3uod",
+    "name": "Kulit Crispy",
+    "category": "Menu Tambahan & Extra Topping",
+    "price": 8000,
+    "stock": 25,
+    "min_stock": 5,
+    "date": "2026-03-22"
+  },
+  {
+    "id": "sk1i4z1tpzmn1b3uod",
+    "name": "Kentang Crispy",
+    "category": "Menu Tambahan & Extra Topping",
+    "price": 8000,
+    "stock": 28,
+    "min_stock": 5,
+    "date": "2026-03-22"
+  },
+  {
+    "id": "9ithi07kxolmn1b3uod",
+    "name": "Extra Sambal",
+    "category": "Menu Tambahan & Extra Topping",
+    "price": 2000,
+    "stock": 50,
+    "min_stock": 10,
+    "date": "2026-03-22"
+  },
+  {
+    "id": "rb0kk6btssmn1b3uod",
+    "name": "Extra Kecap Manis",
+    "category": "Menu Tambahan & Extra Topping",
+    "price": 2000,
+    "stock": 45,
+    "min_stock": 10,
+    "date": "2026-03-22"
+  },
+  {
+    "id": "w3w7a77ug0pmn1b3uod",
+    "name": "Extra Mayonaise",
+    "category": "Menu Tambahan & Extra Topping",
+    "price": 3000,
+    "stock": 40,
+    "min_stock": 10,
+    "date": "2026-03-22"
+  },
+  {
+    "id": "7fotwjwbpblmn1b3uod",
+    "name": "Extra Keju",
+    "category": "Menu Tambahan & Extra Topping",
+    "price": 3000,
+    "stock": 35,
+    "min_stock": 8,
+    "date": "2026-03-22"
+  }
+]

@@ -1,0 +1,27 @@
+{
+  "name": "kasir-kaf-pos",
+  "version": "1.0.0",
+  "description": "Modern POS System for Food Outlet - Kasir KAF",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "node server/server.js",
+    "seed": "node seed.js"
+  },
+  "keywords": [
+    "pos",
+    "point-of-sale",
+    "restaurant",
+    "ayam-goreng"
+  ],
+  "author": "Kasir KAF",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
