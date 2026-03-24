@@ -6,6 +6,7 @@ const cors = require('cors');
 const productsRouter = require('./routes/products');
 const transactionsRouter = require('./routes/transactions');
 const logsRouter = require('./routes/logs');
+const materialsRouter = require('./routes/materials');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -19,6 +20,7 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use('/api/products', productsRouter);
 app.use('/api/transactions', transactionsRouter);
 app.use('/api/logs', logsRouter);
+app.use('/api/materials', materialsRouter);
 
 // Health check
 app.get('/api/health', (req, res) => {

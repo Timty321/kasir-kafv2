@@ -20,7 +20,28 @@ router.get('/', async (req, res) => {
       filtered = products.filter(p => p.date === date);
     }
 
-    res.json(filtered);
+    // Connect stock for composite products to base chicken stock
+    const baseNames = ['Sayap', 'Paha Bawah', 'Dada', 'Paha Atas'];
+    const mappedFiltered = filtered.map(p => {
+      let baseP = p;
+      if (p.category !== 'Ayam Original') {
+        for (const name of baseNames) {
+          if (p.name.includes(name)) {
+            const bp = products.find(bp => bp.category === 'Ayam Original' && bp.name === name);
+            if (bp) {
+              baseP = bp;
+              break;
+            }
+          }
+        }
+      }
+      if (baseP.id !== p.id) {
+        return { ...p, stock: baseP.stock };
+      }
+      return p;
+    });
+
+    res.json(mappedFiltered);
   } catch (error) {
     console.error('Error fetching products:', error);
     res.status(500).json({ error: 'Failed to fetch products' });

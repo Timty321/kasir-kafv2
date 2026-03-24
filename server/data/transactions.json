@@ -1,1 +1,82 @@
-[]
+[
+  {
+    "id": "mohft0hua7hmn371plk",
+    "items": [
+      {
+        "product_id": "1jtc28o5fe3mn36z9lf",
+        "name": "Nasi + Paha Bawah",
+        "qty": 1,
+        "price": 13000
+      }
+    ],
+    "total": 13000,
+    "payment_method": "QRIS",
+    "amount_paid": 13000,
+    "change": 0,
+    "timestamp": "2026-03-23T13:00:39.512Z"
+  },
+  {
+    "id": "xzbqt5fcatjmn372gsj",
+    "items": [
+      {
+        "product_id": "bjdugc9nxhimn36z9lf",
+        "name": "Nasi + Dada",
+        "qty": 1,
+        "price": 14000
+      }
+    ],
+    "total": 14000,
+    "payment_method": "CASH",
+    "amount_paid": 50000,
+    "change": 36000,
+    "timestamp": "2026-03-23T13:01:14.755Z"
+  },
+  {
+    "id": "6mq02loi1vamn374b44",
+    "items": [
+      {
+        "product_id": "5xi2idhjb3wmn36z9lf",
+        "name": "Kulit Crispy",
+        "qty": 5,
+        "price": 8000
+      }
+    ],
+    "total": 40000,
+    "payment_method": "CASH",
+    "amount_paid": 40000,
+    "change": 0,
+    "timestamp": "2026-03-23T13:02:40.708Z"
+  },
+  {
+    "id": "34eb53jico5mn37gfni",
+    "items": [
+      {
+        "product_id": "8w85dzn60yymn36z9lf",
+        "name": "Paha Bawah",
+        "qty": 1,
+        "price": 9500
+      }
+    ],
+    "total": 9500,
+    "payment_method": "CASH",
+    "amount_paid": 9500,
+    "change": 0,
+    "timestamp": "2026-03-23T13:12:06.462Z"
+  },
+  {
+    "id": "habx4gyvweamn37mxw3",
+    "items": [
+      {
+        "product_id": "mi29dlmpggrmn36z9lf",
+        "name": "Nasi + Dada + Teh",
+        "qty": 1,
+        "price": 17000
+      }
+    ],
+    "total": 17000,
+    "payment_method": "CASH",
+    "amount_paid": 17000,
+    "change": 0,
+    "timestamp": "2026-03-23T13:17:10.035Z"
+  }
+]

@@ -50,23 +50,51 @@ router.post('/', async (req, res) => {
     const transactions = await readJSON(getDataPath('transactions.json'));
     const logs = await readJSON(getDataPath('logs.json'));
 
-    // Validate stock and prepare for update
+    // Helper: Map product to its base chicken product if applicable
+    const baseNames = ['Sayap', 'Paha Bawah', 'Dada', 'Paha Atas'];
+    const getBaseProduct = (product, allProducts) => {
+      if (product.category !== 'Ayam Original') {
+        for (const name of baseNames) {
+          if (product.name.includes(name)) {
+            const bp = allProducts.find(p => p.category === 'Ayam Original' && p.name === name);
+            if (bp) return bp;
+          }
+        }
+      }
+      return product;
+    };
+
+    // Calculate demands per base product
+    const demands = {};
     for (const item of items) {
       const product = products.find(p => p.id === item.product_id);
       if (!product) {
         return res.status(404).json({ error: `Product ${item.product_id} not found` });
       }
-      if (product.stock < item.qty) {
+      
+      const baseProduct = getBaseProduct(product, products);
+      if (!demands[baseProduct.id]) {
+        demands[baseProduct.id] = { product: baseProduct, requested: 0 };
+      }
+      demands[baseProduct.id].requested += item.qty;
+    }
+
+    // Validate aggregated stock
+    for (const id in demands) {
+      const { product, requested } = demands[id];
+      if (product.stock < requested) {
         return res.status(400).json({
-          error: `Insufficient stock for ${product.name}. Available: ${product.stock}`,
+          error: `Insufficient stock for ${product.name}. Requested: ${requested}, Available: ${product.stock}`,
         });
       }
     }
 
-    // Update stock
-    for (const item of items) {
-      const product = products.find(p => p.id === item.product_id);
-      product.stock -= item.qty;
+    // Update stock only for base products and unrelated products
+    for (const id in demands) {
+      const prodIndex = products.findIndex(p => p.id === id);
+      if (prodIndex !== -1) {
+        products[prodIndex].stock -= demands[id].requested;
+      }
     }
 
     // Create transaction

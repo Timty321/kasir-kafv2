@@ -1,0 +1,119 @@
+[
+  {
+    "id": "6syuoifu6iqmn36z9lf",
+    "name": "Saos Tomat",
+    "category": "Saos",
+    "unit": "Botol",
+    "stock": 49,
+    "min_stock": 10,
+    "date": "2026-03-23"
+  },
+  {
+    "id": "c8x18fjxkrmn36z9lf",
+    "name": "Saos Sambal",
+    "category": "Saos",
+    "unit": "Botol",
+    "stock": 49,
+    "min_stock": 10,
+    "date": "2026-03-23"
+  },
+  {
+    "id": "mkxvgdqup8lmn36z9lf",
+    "name": "Kertas Ayam",
+    "category": "Kemasan Ayam",
+    "unit": "Lembar",
+    "stock": 500,
+    "min_stock": 100,
+    "date": "2026-03-23"
+  },
+  {
+    "id": "xethm5edh9qmn36z9lf",
+    "name": "Kresek Kecil",
+    "category": "Kemasan Ayam",
+    "unit": "Pcs",
+    "stock": 300,
+    "min_stock": 50,
+    "date": "2026-03-23"
+  },
+  {
+    "id": "ji8c0zzgximmn36z9lf",
+    "name": "Kardus Nasi",
+    "category": "Kemasan Nasi",
+    "unit": "Pcs",
+    "stock": 199,
+    "min_stock": 50,
+    "date": "2026-03-23"
+  },
+  {
+    "id": "j2ie9nklp5dmn36z9lf",
+    "name": "Kertas Nasi",
+    "category": "Kemasan Nasi",
+    "unit": "Lembar",
+    "stock": 499,
+    "min_stock": 100,
+    "date": "2026-03-23"
+  },
+  {
+    "id": "9cxiypoe6qmn36z9lf",
+    "name": "Kresek Tanggung",
+    "category": "Kemasan Nasi",
+    "unit": "Pcs",
+    "stock": 249,
+    "min_stock": 50,
+    "date": "2026-03-23"
+  },
+  {
+    "id": "rtokdz4uly9mn36z9lf",
+    "name": "Nasi",
+    "category": "Makanan Pokok",
+    "unit": "Kg",
+    "stock": 50,
+    "min_stock": 10,
+    "date": "2026-03-23"
+  },
+  {
+    "id": "kwnhl7glp7hmn36z9lf",
+    "name": "Box Kulit",
+    "category": "Kemasan Khusus",
+    "unit": "Pcs",
+    "stock": 150,
+    "min_stock": 30,
+    "date": "2026-03-23"
+  },
+  {
+    "id": "z409yuco63mn36z9lf",
+    "name": "Box Kecil Sadas",
+    "category": "Kemasan Khusus",
+    "unit": "Pcs",
+    "stock": 150,
+    "min_stock": 30,
+    "date": "2026-03-23"
+  },
+  {
+    "id": "qk5st8423xmn36z9lf",
+    "name": "Topping Sadas",
+    "category": "Topping",
+    "unit": "Pcs",
+    "stock": 150,
+    "min_stock": 30,
+    "date": "2026-03-23"
+  },
+  {
+    "id": "z6n0fjsitvmn36z9lf",
+    "name": "Teh Sosro Original 200ml",
+    "category": "Minuman",
+    "unit": "Pcs",
+    "stock": 99,
+    "min_stock": 20,
+    "date": "2026-03-23"
+  },
+  {
+    "id": "2ocfhx44j1gmn36z9lf",
+    "name": "Cup Saos 35ml",
+    "category": "Cup",
+    "unit": "Pcs",
+    "stock": 500,
+    "min_stock": 100,
+    "date": "2026-03-23"
+  }
+]

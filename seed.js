@@ -48,6 +48,36 @@ async function seed() {
   const transactions = [];
   const logs = [];
 
+  // Materials/Supplies inventory
+  const materials = [
+    // Sauces & Condiments
+    { id: generateId(), name: 'Saos Tomat', category: 'Saos', unit: 'Botol', stock: 50, min_stock: 10, date: today },
+    { id: generateId(), name: 'Saos Sambal', category: 'Saos', unit: 'Botol', stock: 50, min_stock: 10, date: today },
+    
+    // Packaging - Ayam
+    { id: generateId(), name: 'Kertas Ayam', category: 'Kemasan Ayam', unit: 'Lembar', stock: 500, min_stock: 100, date: today },
+    { id: generateId(), name: 'Kresek Kecil', category: 'Kemasan Ayam', unit: 'Pcs', stock: 300, min_stock: 50, date: today },
+    
+    // Packaging - Nasi
+    { id: generateId(), name: 'Kardus Nasi', category: 'Kemasan Nasi', unit: 'Pcs', stock: 200, min_stock: 50, date: today },
+    { id: generateId(), name: 'Kertas Nasi', category: 'Kemasan Nasi', unit: 'Lembar', stock: 500, min_stock: 100, date: today },
+    { id: generateId(), name: 'Kresek Tanggung', category: 'Kemasan Nasi', unit: 'Pcs', stock: 250, min_stock: 50, date: today },
+    { id: generateId(), name: 'Nasi', category: 'Makanan Pokok', unit: 'Kg', stock: 50, min_stock: 10, date: today },
+    
+    // Packaging - Kulit/Kentang
+    { id: generateId(), name: 'Box Kulit', category: 'Kemasan Khusus', unit: 'Pcs', stock: 150, min_stock: 30, date: today },
+    
+    // Packaging - Sadas
+    { id: generateId(), name: 'Box Kecil Sadas', category: 'Kemasan Khusus', unit: 'Pcs', stock: 150, min_stock: 30, date: today },
+    { id: generateId(), name: 'Topping Sadas', category: 'Topping', unit: 'Pcs', stock: 150, min_stock: 30, date: today },
+    
+    // Beverages
+    { id: generateId(), name: 'Teh Sosro Original 200ml', category: 'Minuman', unit: 'Pcs', stock: 100, min_stock: 20, date: today },
+    
+    // Sauce Cups & Toppings
+    { id: generateId(), name: 'Cup Saos 35ml', category: 'Cup', unit: 'Pcs', stock: 500, min_stock: 100, date: today },
+  ];
+
   try {
     // Ensure data directory exists
     const dataDir = path.join(__dirname, 'server', 'data');
@@ -57,9 +87,11 @@ async function seed() {
     await writeJSON(getDataPath('products.json'), products);
     await writeJSON(getDataPath('transactions.json'), transactions);
     await writeJSON(getDataPath('logs.json'), logs);
+    await writeJSON(getDataPath('materials.json'), materials);
 
     console.log('✓ Database seeded successfully');
     console.log(`✓ Created ${products.length} products`);
+    console.log(`✓ Created ${materials.length} materials`);
     console.log('✓ Initialized transactions.json');
     console.log('✓ Initialized logs.json');
   } catch (error) {
