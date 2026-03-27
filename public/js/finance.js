@@ -447,88 +447,102 @@ function renderAttendance() {
     
     if(attSorted.length === 0) {
         els.attendanceLogBody.innerHTML = `<tr><td colspan="3" class="p-6 text-center text-gray-500">Belum ada absensi tercatat bulan ini.</td></tr>`;
-        return;
+    } else {
+        els.attendanceLogBody.innerHTML = attSorted.map(a => `
+            <tr class="hover:bg-[#27272A]/30">
+                <td class="p-3 pl-4">
+                   <span class="bg-[#18181B] border border-[#3F3F46] text-white px-3 py-1 rounded shadow-sm text-xs font-bold uppercase tracking-wider">${a.employeeName || a.employeeId || 'Staff'}</span>
+                </td>
+                <td class="p-3 text-gray-300">${(function(d){ try { const [y,mo,dy] = (d||'').split('-').map(Number); return new Date(y,mo-1,dy).toLocaleDateString('id-ID', {weekday:'long', year:'numeric', month:'long', day:'numeric'}); } catch(e){ return d; } })(a.date)}</td>
+                <td class="p-3 text-gray-500 text-sm font-mono">${(a.loginTime||'').substring(0, 19).replace('T', ' ')} WIB</td>
+            </tr>
+        `).join('');
     }
 
-    els.attendanceLogBody.innerHTML = attSorted.map(a => `
-        <tr class="hover:bg-[#27272A]/30">
-            <td class="p-3 pl-4">
-               <span class="bg-[#18181B] border border-[#3F3F46] text-white px-3 py-1 rounded shadow-sm text-xs font-bold uppercase tracking-wider">${a.employeeName || a.employeeId}</span>
-            </td>
-            <td class="p-3 text-gray-300">${(function(d){ const [y,m,day] = d.split('-').map(Number); return new Date(y,m-1,day).toLocaleDateString('id-ID', {weekday:'long', year:'numeric', month:'long', day:'numeric'}); })(a.date)}</td>
-            <td class="p-3 text-gray-500 text-sm font-mono">${a.loginTime.substring(0, 19).replace('T', ' ')} WIB</td>
-        </tr>
-    `).join('');
-
-    // 3. Calendar View
-    renderAttendanceCalendar(staff1Name, staff2Name);
+    // 3. Heatmap Strip (replaces broken grid calendar)
+    renderAttendanceStrip(staff1Name, staff2Name);
 }
 
-function renderAttendanceCalendar(s1Name, s2Name) {
-    try {
-        const [year, month] = state.currentMonth.split('-').map(Number);
-        
-        // Label
-        const mName = new Date(year, month-1).toLocaleString('id-ID', { month: 'long', year: 'numeric' });
-        document.getElementById('calendarMonthLabel').textContent = `Jadwal Kehadiran - ${mName}`;
-        
-        const firstDay = new Date(year, month - 1, 1).getDay(); // 0 (Sun) to 6 (Sat)
-        const daysInMonth = new Date(year, month, 0).getDate();
-        
-        // Get WIB today date string
-        const now = new Date();
-        const wibTime = new Date(now.getTime() + (7 * 60 * 60 * 1000));
-        const todayStr = wibTime.toISOString().split('T')[0];
-        
-        let html = '';
-        
-        for (let i = 0; i < firstDay; i++) {
-            html += `<div class="bg-[#18181B]/50 min-h-[60px] md:min-h-[80px] p-1"></div>`;
-        }
-        
-        for (let day = 1; day <= daysInMonth; day++) {
-            const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-            const isToday = dateStr === todayStr;
-            const attendees = state.attendance.filter(a => a && a.date === dateStr);
-            
-            let pillsHtml = '';
-            attendees.forEach(a => {
-                // Null-safe: handle both "staff1"/"staff2" (new) and "Karyawan 1"/"Karyawan 2" (legacy)
-                const eid = (a.employeeId || '').toString();
-                const isK1 = eid === 'staff1' || eid.includes('1');
-                const colorClass = isK1 
-                    ? 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30' 
-                    : 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
-                const displayName = a.employeeName || eid || 'Staff';
-                const shortName = isK1 ? s1Name.substring(0, 6) : s2Name.substring(0, 6);
-                pillsHtml += `<div class="text-[9px] md:text-[10px] mt-1 px-1 md:px-1.5 py-0.5 rounded border leading-tight ${colorClass} truncate" title="${displayName}">${shortName}</div>`;
-            });
-            
-            const textClass = isToday ? 'text-white' : 'text-gray-400';
-            const numBgClass = isToday ? 'bg-indigo-500 text-white rounded-full w-5 h-5 flex items-center justify-center -ml-1 -mt-1 shadow-md shadow-indigo-500/30' : '';
-            
-            html += `
-                <div class="bg-[#18181B] min-h-[60px] md:min-h-[80px] p-1.5 md:p-2 flex flex-col hover:bg-[#27272A]/50 transition cursor-default group">
-                    <span class="text-[10px] md:text-xs font-semibold ${textClass} ${numBgClass}">${day}</span>
-                    <div class="mt-0.5 md:mt-1 flex-1 flex flex-col gap-0.5">
-                        ${pillsHtml}
-                    </div>
-                </div>
-            `;
-        }
-        
-        const totalCells = firstDay + daysInMonth;
-        const remainingCells = (7 - (totalCells % 7)) % 7;
-        for (let i = 0; i < remainingCells; i++) {
-            html += `<div class="bg-[#18181B]/50 min-h-[60px] md:min-h-[80px] p-1"></div>`;
-        }
-        
-        document.getElementById('calendarGrid').innerHTML = html;
-    } catch(err) {
-        console.error('[Calendar] Render error:', err);
-        const grid = document.getElementById('calendarGrid');
-        if (grid) grid.innerHTML = `<div class="col-span-7 p-6 text-center text-red-400 text-sm">Gagal memuat kalender. Cek console untuk detail.</div>`;
+function renderAttendanceStrip(s1Name, s2Name) {
+    const container = document.getElementById('attendanceStripContainer');
+    if (!container) return;
+
+    const parts = (state.currentMonth || '').split('-');
+    const year  = parseInt(parts[0]) || new Date().getFullYear();
+    const month = parseInt(parts[1]) || (new Date().getMonth() + 1);
+    const daysInMonth = new Date(year, month, 0).getDate();
+
+    // WIB today
+    const nowMs   = Date.now();
+    const wibMs   = nowMs + 7 * 3600 * 1000;
+    const todayStr = new Date(wibMs).toISOString().split('T')[0];
+
+    // Month label
+    const mLabel = document.getElementById('calendarMonthLabel');
+    if (mLabel) {
+        const mName = new Date(year, month - 1).toLocaleString('id-ID', { month: 'long', year: 'numeric' });
+        mLabel.textContent = 'Rekap Kehadiran — ' + mName;
     }
+
+    // Build lookup: date -> [staff ids]
+    const lookup = {};
+    (state.attendance || []).forEach(a => {
+        if (!a || !a.date) return;
+        if (!lookup[a.date]) lookup[a.date] = [];
+        lookup[a.date].push((a.employeeId || '').toString());
+    });
+
+    // Day-of-week abbrev for tooltip
+    const DOW = ['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
+
+    function buildStrip(isStaff1) {
+        const name  = isStaff1 ? s1Name : s2Name;
+        const color = isStaff1
+            ? { on: 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/30',   text: 'text-indigo-400', ring: 'ring-2 ring-indigo-400' }
+            : { on: 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/30', text: 'text-emerald-400', ring: 'ring-2 ring-emerald-400' };
+
+        let days = '';
+        for (let d = 1; d <= daysInMonth; d++) {
+            const pad     = String(d).padStart(2, '0');
+            const mpad    = String(month).padStart(2, '0');
+            const dateStr = year + '-' + mpad + '-' + pad;
+            const dow     = new Date(year, month - 1, d).getDay();
+            const present = (lookup[dateStr] || []).some(eid =>
+                isStaff1 ? (eid === 'staff1' || eid.includes('1'))
+                         : (eid === 'staff2' || (eid.includes('2') && !eid.includes('12')))
+            );
+            const isToday  = dateStr === todayStr;
+            const isFuture = dateStr > todayStr;
+
+            const baseCls = 'flex flex-col items-center justify-center rounded-lg w-9 h-11 md:w-10 md:h-12 text-center cursor-default transition-all duration-150 select-none';
+            let stateCls, numCls;
+            if (present) {
+                stateCls = color.on + (isToday ? ' ' + color.ring : '');
+                numCls   = 'text-white';
+            } else if (isFuture) {
+                stateCls = 'bg-[#18181B] border border-dashed border-[#3F3F46] opacity-40';
+                numCls   = 'text-gray-600';
+            } else {
+                stateCls = 'bg-[#18181B] border border-[#27272A]' + (isToday ? ' ' + color.ring : '');
+                numCls   = isToday ? color.text : 'text-gray-500';
+            }
+
+            days += `<div class="${baseCls} ${stateCls}" title="${DOW[dow]}, ${d} — ${present ? 'Hadir ✓' : (isFuture ? 'Belum' : 'Tidak Hadir')}">
+                        <span class="text-[11px] font-bold leading-none ${numCls}">${d}</span>
+                        <span class="text-[8px] leading-none mt-0.5 ${present ? 'text-white/70' : 'text-gray-600'}">${DOW[dow]}</span>
+                     </div>`;
+        }
+
+        return `<div class="space-y-3">
+            <div class="flex items-center gap-3">
+                <span class="text-xs font-bold uppercase tracking-widest ${color.text} w-24 shrink-0">${name}</span>
+                <div class="h-px flex-1 bg-[#27272A]"></div>
+            </div>
+            <div class="flex flex-wrap gap-1.5">${days}</div>
+        </div>`;
+    }
+
+    container.innerHTML = buildStrip(true) + '<div class="border-t border-[#27272A] my-2"></div>' + buildStrip(false);
 }
 
 // --- Printable Report Build ---
