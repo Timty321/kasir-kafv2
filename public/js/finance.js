@@ -465,61 +465,70 @@ function renderAttendance() {
 }
 
 function renderAttendanceCalendar(s1Name, s2Name) {
-    const [year, month] = state.currentMonth.split('-').map(Number);
-    
-    // Label
-    const mName = new Date(year, month-1).toLocaleString('id-ID', { month: 'long', year: 'numeric' });
-    document.getElementById('calendarMonthLabel').textContent = `Jadwal Kehadiran - ${mName}`;
-    
-    const firstDay = new Date(year, month - 1, 1).getDay(); // 0 (Sun) to 6 (Sat)
-    const daysInMonth = new Date(year, month, 0).getDate();
-    
-    // Get WIB today date string
-    const now = new Date();
-    const wibTime = new Date(now.getTime() + (7 * 60 * 60 * 1000));
-    const todayStr = wibTime.toISOString().split('T')[0];
-    
-    let html = '';
-    
-    for (let i = 0; i < firstDay; i++) {
-        html += `<div class="bg-[#18181B]/50 min-h-[60px] md:min-h-[80px] p-1"></div>`;
-    }
-    
-    for (let day = 1; day <= daysInMonth; day++) {
-        const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-        const isToday = dateStr === todayStr;
-        const attendees = state.attendance.filter(a => a.date === dateStr);
+    try {
+        const [year, month] = state.currentMonth.split('-').map(Number);
         
-        let pillsHtml = '';
-        attendees.forEach(a => {
-            const isK1 = a.employeeId.includes('1');
-            const colorClass = isK1 
-                ? 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30' 
-                : 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
-            const shortName = isK1 ? s1Name.substring(0, 6) : s2Name.substring(0, 6);
-            pillsHtml += `<div class="text-[9px] md:text-[10px] mt-1 px-1 md:px-1.5 py-0.5 rounded border leading-tight ${colorClass} truncate" title="${a.employeeName || a.employeeId}">${shortName}</div>`;
-        });
+        // Label
+        const mName = new Date(year, month-1).toLocaleString('id-ID', { month: 'long', year: 'numeric' });
+        document.getElementById('calendarMonthLabel').textContent = `Jadwal Kehadiran - ${mName}`;
         
-        const textClass = isToday ? 'text-white' : 'text-gray-400';
-        const numBgClass = isToday ? 'bg-indigo-500 text-white rounded-full w-5 h-5 flex items-center justify-center -ml-1 -mt-1 shadow-md shadow-indigo-500/30' : '';
+        const firstDay = new Date(year, month - 1, 1).getDay(); // 0 (Sun) to 6 (Sat)
+        const daysInMonth = new Date(year, month, 0).getDate();
         
-        html += `
-            <div class="bg-[#18181B] min-h-[60px] md:min-h-[80px] p-1.5 md:p-2 flex flex-col hover:bg-[#27272A]/50 transition cursor-default group">
-                <span class="text-[10px] md:text-xs font-semibold ${textClass} ${numBgClass}">${day}</span>
-                <div class="mt-0.5 md:mt-1 flex-1 flex flex-col gap-0.5">
-                    ${pillsHtml}
+        // Get WIB today date string
+        const now = new Date();
+        const wibTime = new Date(now.getTime() + (7 * 60 * 60 * 1000));
+        const todayStr = wibTime.toISOString().split('T')[0];
+        
+        let html = '';
+        
+        for (let i = 0; i < firstDay; i++) {
+            html += `<div class="bg-[#18181B]/50 min-h-[60px] md:min-h-[80px] p-1"></div>`;
+        }
+        
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            const isToday = dateStr === todayStr;
+            const attendees = state.attendance.filter(a => a && a.date === dateStr);
+            
+            let pillsHtml = '';
+            attendees.forEach(a => {
+                // Null-safe: handle both "staff1"/"staff2" (new) and "Karyawan 1"/"Karyawan 2" (legacy)
+                const eid = (a.employeeId || '').toString();
+                const isK1 = eid === 'staff1' || eid.includes('1');
+                const colorClass = isK1 
+                    ? 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30' 
+                    : 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
+                const displayName = a.employeeName || eid || 'Staff';
+                const shortName = isK1 ? s1Name.substring(0, 6) : s2Name.substring(0, 6);
+                pillsHtml += `<div class="text-[9px] md:text-[10px] mt-1 px-1 md:px-1.5 py-0.5 rounded border leading-tight ${colorClass} truncate" title="${displayName}">${shortName}</div>`;
+            });
+            
+            const textClass = isToday ? 'text-white' : 'text-gray-400';
+            const numBgClass = isToday ? 'bg-indigo-500 text-white rounded-full w-5 h-5 flex items-center justify-center -ml-1 -mt-1 shadow-md shadow-indigo-500/30' : '';
+            
+            html += `
+                <div class="bg-[#18181B] min-h-[60px] md:min-h-[80px] p-1.5 md:p-2 flex flex-col hover:bg-[#27272A]/50 transition cursor-default group">
+                    <span class="text-[10px] md:text-xs font-semibold ${textClass} ${numBgClass}">${day}</span>
+                    <div class="mt-0.5 md:mt-1 flex-1 flex flex-col gap-0.5">
+                        ${pillsHtml}
+                    </div>
                 </div>
-            </div>
-        `;
+            `;
+        }
+        
+        const totalCells = firstDay + daysInMonth;
+        const remainingCells = (7 - (totalCells % 7)) % 7;
+        for (let i = 0; i < remainingCells; i++) {
+            html += `<div class="bg-[#18181B]/50 min-h-[60px] md:min-h-[80px] p-1"></div>`;
+        }
+        
+        document.getElementById('calendarGrid').innerHTML = html;
+    } catch(err) {
+        console.error('[Calendar] Render error:', err);
+        const grid = document.getElementById('calendarGrid');
+        if (grid) grid.innerHTML = `<div class="col-span-7 p-6 text-center text-red-400 text-sm">Gagal memuat kalender. Cek console untuk detail.</div>`;
     }
-    
-    const totalCells = firstDay + daysInMonth;
-    const remainingCells = (7 - (totalCells % 7)) % 7;
-    for (let i = 0; i < remainingCells; i++) {
-        html += `<div class="bg-[#18181B]/50 min-h-[60px] md:min-h-[80px] p-1"></div>`;
-    }
-    
-    document.getElementById('calendarGrid').innerHTML = html;
 }
 
 // --- Printable Report Build ---
