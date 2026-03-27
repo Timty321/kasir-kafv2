@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { readJSON, writeJSON, getDataPath } = require('../utils/db');
-
+const { sendAdminMessage } = require('../utils/whatsapp');
 function generateId() {
   return Math.random().toString(36).substring(2) + Date.now().toString(36);
 }
@@ -101,6 +101,8 @@ router.post('/', async (req, res) => {
     });
     await writeJSON(getDataPath('logs.json'), logs);
 
+    sendAdminMessage(`📦 *Produk Baru Ditambahkan*\nNama: ${name}\nHarga: Rp${parseInt(price).toLocaleString('id-ID')}\nStok: ${stock}`);
+
     res.status(201).json(newProduct);
   } catch (error) {
     console.error('Error creating product:', error);
@@ -124,8 +126,9 @@ router.put('/:id', async (req, res) => {
       return res.status(404).json({ error: 'Product not found' });
     }
 
-    const oldName = products[productIndex].name;
+    const oldP = { ...products[productIndex] };
     products[productIndex] = { ...products[productIndex], ...updates };
+    const newP = products[productIndex];
     await writeJSON(getDataPath('products.json'), products);
 
     // Log the action
@@ -134,10 +137,17 @@ router.put('/:id', async (req, res) => {
       id: generateId(),
       type: 'inventory',
       action: 'update',
-      message: `Product updated: ${oldName}`,
+      message: `Product updated: ${oldP.name}`,
       timestamp: new Date().toISOString(),
     });
     await writeJSON(getDataPath('logs.json'), logs);
+
+    let msgDiff = `✏️ *STOK/DATA PRODUK DIEDIT*\nNama: ${newP.name}\n\n`;
+    if (oldP.stock !== newP.stock) msgDiff += `📦 Stok: *${oldP.stock}* ➡️ *${newP.stock}*\n`;
+    if (oldP.price !== newP.price) msgDiff += `💰 Harga: *Rp${oldP.price}* ➡️ *Rp${newP.price}*\n`;
+    if (oldP.stock === newP.stock && oldP.price === newP.price) msgDiff += `Data Informasi Makanan telah diperbarui.`;
+    
+    sendAdminMessage(msgDiff.trim());
 
     res.json(products[productIndex]);
   } catch (error) {
@@ -174,6 +184,8 @@ router.delete('/:id', async (req, res) => {
       timestamp: new Date().toISOString(),
     });
     await writeJSON(getDataPath('logs.json'), logs);
+
+    sendAdminMessage(`🗑️ *Produk Dihapus*\nNama: ${deletedProduct.name} telah dihapus dari inventori.`);
 
     res.json({ message: 'Product deleted successfully', product: deletedProduct });
   } catch (error) {

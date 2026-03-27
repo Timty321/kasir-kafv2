@@ -17,10 +17,10 @@
   "author": "Kasir KAF",
   "license": "MIT",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.18.2",
-    "cors": "^2.8.5"
+    "node-cron": "^4.2.1"
   },
-  "devDependencies": {},
   "engines": {
     "node": ">=14.0.0"
   }

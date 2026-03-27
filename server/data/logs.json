@@ -47,5 +47,82 @@
     "action": "update",
     "message": "Product updated: Sayap",
     "timestamp": "2026-03-24T03:24:39.916Z"
+  },
+  {
+    "id": "17wme8wdgp1mn45ry5z",
+    "type": "transaction",
+    "action": "checkout",
+    "message": "Transaction completed: 2 item(s), Total: Rp22.000",
+    "timestamp": "2026-03-24T05:12:50.801Z"
+  },
+  {
+    "id": "xuo7m05s1rmn45rzzz",
+    "type": "transaction",
+    "action": "checkout",
+    "message": "Transaction completed: 2 item(s), Total: Rp22.000",
+    "timestamp": "2026-03-24T05:12:52.991Z"
+  },
+  {
+    "id": "b3mt5a9f2g6mn45slmw",
+    "type": "transaction",
+    "action": "checkout",
+    "message": "Transaction completed: 2 item(s), Total: Rp27.000",
+    "timestamp": "2026-03-24T05:13:21.090Z"
+  },
+  {
+    "id": "fz7uc4125pemn45trv3",
+    "type": "inventory",
+    "action": "update",
+    "message": "Product updated: Sayap",
+    "timestamp": "2026-03-24T05:14:15.759Z"
+  },
+  {
+    "id": "an49k0zxh9emn45vf9q",
+    "type": "inventory",
+    "action": "update",
+    "message": "Product updated: Sayap",
+    "timestamp": "2026-03-24T05:15:32.750Z"
+  },
+  {
+    "id": "1admfyj1l6hmn4de5om",
+    "type": "transaction",
+    "action": "checkout",
+    "message": "Transaction completed: 1 item(s), Total: Rp17.000",
+    "timestamp": "2026-03-24T08:46:04.671Z"
+  },
+  {
+    "id": "dngetl0bbuamn4j5jq8",
+    "type": "inventory",
+    "action": "update",
+    "message": "Product updated: Sayap",
+    "timestamp": "2026-03-24T11:27:20.096Z"
+  },
+  {
+    "id": "rsblghb85kqmn4jgs26",
+    "type": "inventory",
+    "action": "update",
+    "message": "Material updated: Saos Tomat",
+    "timestamp": "2026-03-24T11:36:04.110Z"
+  },
+  {
+    "id": "z7raowo4fobmn4jhc85",
+    "type": "transaction",
+    "action": "checkout",
+    "message": "Transaction completed: 1 item(s), Total: Rp36.000",
+    "timestamp": "2026-03-24T11:36:30.286Z"
+  },
+  {
+    "id": "k9pg0x869cqmn8pvyz8",
+    "type": "transaction",
+    "action": "checkout",
+    "message": "Transaction completed: 1 item(s), Total: Rp15.500",
+    "timestamp": "2026-03-27T09:46:55.420Z"
+  },
+  {
+    "id": "3qgj4zgqpn9mn8pwhcj",
+    "type": "inventory",
+    "action": "update",
+    "message": "Product updated: Sayap",
+    "timestamp": "2026-03-27T09:47:19.123Z"
   }
 ]

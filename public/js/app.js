@@ -1435,6 +1435,9 @@ function switchTab(tabName) {
     loadProducts();
   } else if (tabName === 'history') {
     loadLogs();
+  } else if (tabName === 'finance') {
+    loadFinanceSummary();
+    loadExpenses();
   }
 }
 
@@ -1466,6 +1469,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const params = new URLSearchParams(window.location.search);
     const tab = params.get('tab') || 'inventory';
     switchTab(tab);
+    
+    // Load settings from active JSON config
+    loadSettings();
   }
 
   // Cart buttons
@@ -1509,3 +1515,191 @@ document.addEventListener('DOMContentLoaded', async () => {
   console.log('========== KASIR-KAF POS SYSTEM READY ==========');
   console.log('ℹ️  Open DevTools Console (F12) to view debug logs for transactions and material deductions\\n');
 });
+
+// ======================
+// SETTINGS LOGIC
+// ======================
+async function loadSettings() {
+    try {
+        const res = await fetch('/api/settings');
+        const data = await res.json();
+        const rTime = document.getElementById('resetTime');
+        const aReset = document.getElementById('autoResetStock');
+        if (rTime) rTime.value = data.resetTime || '00:00';
+        if (aReset) aReset.checked = data.autoResetStock || false;
+    } catch(e) { console.error('Failed fetching settings', e); }
+}
+
+async function saveSettings() {
+    try {
+        const rTime = document.getElementById('resetTime').value || '00:00';
+        const aReset = document.getElementById('autoResetStock').checked;
+        await fetch('/api/settings', {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ resetTime: rTime, autoResetStock: aReset })
+        });
+        showSuccessToast('Pengaturan autopilot sistem berhasil disimpan!');
+    } catch(e) {
+        showErrorToast('Gagal menyimpan pengaturan.');
+    }
+}
+
+async function forceResetStock() {
+    if (!confirm('AWAS! Memaksa reset berarti stok PRODUK/MENU Anda saat ini akan seketika kembali ke 0. Stok Bahan tidak akan terpengaruh. Lanjutkan?')) return;
+    try {
+        await fetch('/api/settings/reset-stock', { method: 'POST' });
+        showSuccessToast('Stok Produk berhasil dikosongkan menjadi 0!');
+        await loadProducts(); 
+    } catch (e) {
+        showErrorToast('Gagal mengosongkan stok.');
+    }
+}
+
+async function clearAllHistory() {
+    if (!confirm('PERINGATAN KERAS! Anda akan menghapus secara PERMANEN semua data Riwayat Transaksi Penjualan dan Logs. Tindakan ini TIDAK BISA dibatalkan. Lanjutkan?')) return;
+    try {
+        await fetch('/api/settings/clear-history', { method: 'POST' });
+        showSuccessToast('Semua Riwayat Log berhasil dihapus permanen!');
+        document.getElementById('logsList').innerHTML = '<tr><td colspan="4" class="px-6 py-4 text-center text-gray-500">Tidak ada data</td></tr>';
+        const logsTotal = document.getElementById('logsTotal');
+        if (logsTotal) logsTotal.textContent = 'Rp0';
+    } catch (e) {
+        showErrorToast('Gagal menghapus riwayat.');
+    }
+}
+
+// ======================
+// FINANCE & EXPENSE MANAGEMENT
+// ======================
+
+function toggleFinanceFilter() {
+    const type = document.getElementById('financeFilterType').value;
+    if (type === 'month') {
+        document.getElementById('financeMonth').classList.remove('hidden');
+        document.getElementById('financeDate').classList.add('hidden');
+    } else {
+        document.getElementById('financeMonth').classList.add('hidden');
+        document.getElementById('financeDate').classList.remove('hidden');
+    }
+}
+
+async function loadFinanceSummary() {
+    const type = document.getElementById('financeFilterType').value;
+    const dateVal = document.getElementById('financeDate').value;
+    const monthVal = document.getElementById('financeMonth').value;
+    
+    let query = '';
+    if (type === 'month' && monthVal) {
+        query = `?month=${monthVal}`;
+    } else if (type === 'date' && dateVal) {
+        query = `?date=${dateVal}`;
+    }
+
+    try {
+        const data = await apiRequest('/finance/summary' + query);
+        const finIncomeEle = document.getElementById('finIncome');
+        if (finIncomeEle) finIncomeEle.textContent = formatIDR(data.totalIncome);
+        const finExpEle = document.getElementById('finExpense');
+        if (finExpEle) finExpEle.textContent = formatIDR(data.totalExpense);
+        const finSalEle = document.getElementById('finSalary');
+        if (finSalEle) finSalEle.textContent = formatIDR(data.totalSalary);
+        const finProfEle = document.getElementById('finProfit');
+        if (finProfEle) finProfEle.textContent = formatIDR(data.profit);
+        
+        const att1 = document.getElementById('attStaff1');
+        if (att1) att1.textContent = data.staff1Attendance;
+        const att2 = document.getElementById('attStaff2');
+        if (att2) att2.textContent = data.staff2Attendance;
+        
+        // Render attendance table
+        const tbodyAtt = document.getElementById('attendanceTable');
+        if (tbodyAtt) {
+            if (!data.attendanceList || data.attendanceList.length === 0) {
+                tbodyAtt.innerHTML = '<tr><td colspan="3" class="py-4 text-center text-gray-500">Belum ada absen...</td></tr>';
+            } else {
+                tbodyAtt.innerHTML = data.attendanceList.sort((a,b)=> new Date(b.loginTime) - new Date(a.loginTime)).map(att => `
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="px-4 py-3 font-semibold text-gray-700">${att.employeeId}</td>
+                        <td class="px-4 py-3 text-center">${att.date}</td>
+                        <td class="px-4 py-3 text-right">${new Date(att.loginTime).toLocaleTimeString('id-ID')}</td>
+                    </tr>
+                `).join('');
+            }
+        }
+    } catch (error) {
+        console.error('Failed to load summary', error);
+    }
+}
+
+async function loadExpenses() {
+    try {
+        const expenses = await apiRequest('/finance/expenses');
+        const tbody = document.getElementById('expenseTable');
+        if (!tbody) return;
+        
+        if (expenses.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" class="py-4 text-center text-gray-500">Belum ada pengeluaran...</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = expenses.sort((a,b)=> new Date(b.date) - new Date(a.date)).map(exp => `
+            <tr class="border-b">
+                <td class="px-4 py-3">${exp.name}</td>
+                <td class="px-4 py-3"><span class="bg-gray-200 text-gray-700 px-2 py-1 rounded text-xs font-bold">${exp.category}</span></td>
+                <td class="px-4 py-3">${exp.date}</td>
+                <td class="px-4 py-3 text-right font-bold text-red-600">${formatIDR(exp.amount)}</td>
+                <td class="px-4 py-3 text-center">
+                    <button onclick="deleteExpense('${exp.id}')" class="text-red-500 hover:text-red-700 bg-red-50 p-1 rounded">Hapus</button>
+                </td>
+            </tr>
+        `).join('');
+    } catch (e) {
+        console.error('Failed fetching expenses', e);
+    }
+}
+
+async function addExpense() {
+    const name = document.getElementById('expName').value;
+    const amount = document.getElementById('expAmount').value;
+    const category = document.getElementById('expCat').value;
+    const type = document.getElementById('financeFilterType').value;
+    
+    let targetDate = undefined;
+    if (type === 'date') targetDate = document.getElementById('financeDate').value;
+    else if (type === 'month') {
+        const monthVal = document.getElementById('financeMonth').value;
+        if (monthVal) targetDate = `${monthVal}-01`;
+    }
+
+    if (!name || !amount) {
+        showErrorToast('Mohon lengkapi data pengeluaran');
+        return;
+    }
+    
+    try {
+        await apiRequest('/finance/expenses', {
+            method: 'POST',
+            body: JSON.stringify({ name, amount: parseInt(amount), category, date: targetDate })
+        });
+        showSuccessToast('Pengeluaran berhasil dicatat!');
+        document.getElementById('expName').value = '';
+        document.getElementById('expAmount').value = '';
+        loadExpenses();
+        loadFinanceSummary();
+    } catch(e) {
+        showErrorToast('Gagal mencatat pengeluaran');
+    }
+}
+
+async function deleteExpense(id) {
+    if (!confirm('Hapus pengeluaran ini?')) return;
+    try {
+       await apiRequest('/finance/expenses/' + id, { method: 'DELETE' });
+       showSuccessToast('Pengeluaran dihapus');
+       loadExpenses();
+       loadFinanceSummary();
+    } catch(e) {
+       showErrorToast('Gagal menghapus');
+    }
+}

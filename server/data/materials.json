@@ -4,7 +4,7 @@
     "name": "Saos Tomat",
     "category": "Saos",
     "unit": "Botol",
-    "stock": 49,
+    "stock": 19,
     "min_stock": 10,
     "date": "2026-03-23"
   },
@@ -13,7 +13,7 @@
     "name": "Saos Sambal",
     "category": "Saos",
     "unit": "Botol",
-    "stock": 49,
+    "stock": 0,
     "min_stock": 10,
     "date": "2026-03-23"
   },
@@ -22,7 +22,7 @@
     "name": "Kertas Ayam",
     "category": "Kemasan Ayam",
     "unit": "Lembar",
-    "stock": 500,
+    "stock": 0,
     "min_stock": 100,
     "date": "2026-03-23"
   },
@@ -31,7 +31,7 @@
     "name": "Kresek Kecil",
     "category": "Kemasan Ayam",
     "unit": "Pcs",
-    "stock": 300,
+    "stock": 0,
     "min_stock": 50,
     "date": "2026-03-23"
   },
@@ -40,7 +40,7 @@
     "name": "Kardus Nasi",
     "category": "Kemasan Nasi",
     "unit": "Pcs",
-    "stock": 199,
+    "stock": 0,
     "min_stock": 50,
     "date": "2026-03-23"
   },
@@ -49,7 +49,7 @@
     "name": "Kertas Nasi",
     "category": "Kemasan Nasi",
     "unit": "Lembar",
-    "stock": 499,
+    "stock": 0,
     "min_stock": 100,
     "date": "2026-03-23"
   },
@@ -58,7 +58,7 @@
     "name": "Kresek Tanggung",
     "category": "Kemasan Nasi",
     "unit": "Pcs",
-    "stock": 249,
+    "stock": 0,
     "min_stock": 50,
     "date": "2026-03-23"
   },
@@ -67,7 +67,7 @@
     "name": "Nasi",
     "category": "Makanan Pokok",
     "unit": "Kg",
-    "stock": 50,
+    "stock": 0,
     "min_stock": 10,
     "date": "2026-03-23"
   },
@@ -76,7 +76,7 @@
     "name": "Box Kulit",
     "category": "Kemasan Khusus",
     "unit": "Pcs",
-    "stock": 150,
+    "stock": 0,
     "min_stock": 30,
     "date": "2026-03-23"
   },
@@ -85,7 +85,7 @@
     "name": "Box Kecil Sadas",
     "category": "Kemasan Khusus",
     "unit": "Pcs",
-    "stock": 150,
+    "stock": 0,
     "min_stock": 30,
     "date": "2026-03-23"
   },
@@ -94,7 +94,7 @@
     "name": "Topping Sadas",
     "category": "Topping",
     "unit": "Pcs",
-    "stock": 150,
+    "stock": 0,
     "min_stock": 30,
     "date": "2026-03-23"
   },
@@ -103,7 +103,7 @@
     "name": "Teh Sosro Original 200ml",
     "category": "Minuman",
     "unit": "Pcs",
-    "stock": 99,
+    "stock": 0,
     "min_stock": 20,
     "date": "2026-03-23"
   },
@@ -112,7 +112,7 @@
     "name": "Cup Saos 35ml",
     "category": "Cup",
     "unit": "Pcs",
-    "stock": 500,
+    "stock": 0,
     "min_stock": 100,
     "date": "2026-03-23"
   }

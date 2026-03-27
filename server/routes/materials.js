@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { readJSON, writeJSON, getDataPath } = require('../utils/db');
-
+const { sendAdminMessage } = require('../utils/whatsapp');
 function generateId() {
   return Math.random().toString(36).substring(2) + Date.now().toString(36);
 }
@@ -73,6 +73,8 @@ router.post('/', async (req, res) => {
     });
     await writeJSON(getDataPath('logs.json'), logs);
 
+    sendAdminMessage(`🧪 *Bahan Baru Ditambahkan*\nNama: ${name}\nKategori: ${category}\nStok Awal: ${stock} ${unit}`);
+
     res.status(201).json(newMaterial);
   } catch (error) {
     console.error('Error creating material:', error);
@@ -96,8 +98,9 @@ router.put('/:id', async (req, res) => {
       return res.status(404).json({ error: 'Material not found' });
     }
 
-    const oldName = materials[materialIndex].name;
+    const oldM = { ...materials[materialIndex] };
     materials[materialIndex] = { ...materials[materialIndex], ...updates };
+    const newM = materials[materialIndex];
     await writeJSON(getDataPath('materials.json'), materials);
 
     // Log the action
@@ -106,10 +109,16 @@ router.put('/:id', async (req, res) => {
       id: generateId(),
       type: 'inventory',
       action: 'update',
-      message: `Material updated: ${oldName}`,
+      message: `Material updated: ${oldM.name}`,
       timestamp: new Date().toISOString(),
     });
     await writeJSON(getDataPath('logs.json'), logs);
+
+    let msgDiff = `✏️ *STOK/DATA BAHAN DIEDIT*\nNama: ${newM.name}\n\n`;
+    if (oldM.stock !== newM.stock) msgDiff += `📦 Stok: *${oldM.stock}* ➡️ *${newM.stock} ${newM.unit}*\n`;
+    if (oldM.stock === newM.stock) msgDiff += `Data Detail Bahan telah diperbarui.`;
+    
+    sendAdminMessage(msgDiff.trim());
 
     res.json(materials[materialIndex]);
   } catch (error) {
@@ -146,6 +155,8 @@ router.delete('/:id', async (req, res) => {
       timestamp: new Date().toISOString(),
     });
     await writeJSON(getDataPath('logs.json'), logs);
+
+    sendAdminMessage(`🗑️ *Bahan Dihapus*\nNama: ${deletedMaterial.name} telah dihapus dari inventori.`);
 
     res.json({ message: 'Material deleted successfully', material: deletedMaterial });
   } catch (error) {

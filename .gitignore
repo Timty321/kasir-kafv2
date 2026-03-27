@@ -8,10 +8,22 @@ yarn.lock
 .env.local
 .env.*.local
 
+# Logs
+*.log
+logs/
+
+# Runtime data (IMPORTANT for your project)
+server/data/*.json
+
+# WhatsApp Bot (VERY IMPORTANT)
+whatsapp-bot/.wwebjs_auth/
+whatsapp-bot/.wwebjs_cache/
+whatsapp-bot/node_modules/
+
 # System files
 .DS_Store
 Thumbs.db
-*.log
+ehthumbs.db
 
 # IDE
 .vscode/
@@ -27,4 +39,3 @@ build/
 # OS
 .Spotlight-V100
 .Trashes
-ehthumbs.db
