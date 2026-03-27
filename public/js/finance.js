@@ -13,7 +13,7 @@ function formatCurrency(number) {
 
 // Global State
 const state = {
-    currentMonth: new Date().toISOString().substring(0, 7), // 'YYYY-MM'
+    currentMonth: (function(){ const now = new Date(); const wib = new Date(now.getTime() + (7*60*60*1000)); return wib.toISOString().substring(0, 7); })(), // 'YYYY-MM' (WIB)
     summary: { staff1Attendance: 0, staff2Attendance: 0, totalSalary: 0, totalIncome: 0, totalExpense: 0, profit: 0 },
     transactions: [],
     expenses: [],
@@ -455,8 +455,8 @@ function renderAttendance() {
             <td class="p-3 pl-4">
                <span class="bg-[#18181B] border border-[#3F3F46] text-white px-3 py-1 rounded shadow-sm text-xs font-bold uppercase tracking-wider">${a.employeeName || a.employeeId}</span>
             </td>
-            <td class="p-3 text-gray-300">${new Date(a.date).toLocaleDateString('id-ID', {weekday:'long', year:'numeric', month:'long', day:'numeric'})}</td>
-            <td class="p-3 text-gray-500 text-sm font-mono">${new Date(a.loginTime).toISOString().replace('T', ' ').substring(0, 19)} UTC</td>
+            <td class="p-3 text-gray-300">${(function(d){ const [y,m,day] = d.split('-').map(Number); return new Date(y,m-1,day).toLocaleDateString('id-ID', {weekday:'long', year:'numeric', month:'long', day:'numeric'}); })(a.date)}</td>
+            <td class="p-3 text-gray-500 text-sm font-mono">${a.loginTime.substring(0, 19).replace('T', ' ')} WIB</td>
         </tr>
     `).join('');
 

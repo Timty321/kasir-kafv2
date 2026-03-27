@@ -53,8 +53,10 @@ router.post('/login', async (req, res) => {
             }
 
             const now = new Date();
-            const wibTime = new Date(now.getTime() + (7 * 60 * 60 * 1000));
-            const today = wibTime.toISOString().split('T')[0];
+            // Always calculate WIB date regardless of server timezone
+            const wibOffset = 7 * 60 * 60 * 1000;
+            const wibTime = new Date(now.getTime() + wibOffset);
+            const today = wibTime.toISOString().split('T')[0]; // 'YYYY-MM-DD' in WIB
             
             // Backward compatibility logic: check generic name OR stable id
             const alreadyLogged = attendance.find(a => 
@@ -62,11 +64,13 @@ router.post('/login', async (req, res) => {
             );
             
             if (!alreadyLogged) {
+                // Store loginTime as WIB ISO string so display is human-readable
+                const wibIsoString = wibTime.toISOString().replace('Z', '+07:00');
                 attendance.push({
                     employeeId: staffId, // Use stable ID
                     employeeName: staffName, // Store dynamic name for logging
                     date: today,
-                    loginTime: new Date().toISOString()
+                    loginTime: wibIsoString // Store as WIB time
                 });
                 await writeJSON(getDataPath('attendance.json'), attendance);
                 console.log(`[AUTH] ${staffName} (${staffId}) logged in. Attendance recorded.`);
