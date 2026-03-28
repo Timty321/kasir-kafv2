@@ -261,11 +261,15 @@ function renderCategoryButtons() {
     <button
       class="category-btn px-6 py-2.5 rounded-full bg-white border border-gray-200 text-gray-600 font-bold text-sm whitespace-nowrap shadow-sm transition-all hover:shadow-md hover:border-orange-300"
       data-category="${cat}"
-      onclick="filterByCategory('${cat}')"
     >
       ${cat}
     </button>
   `).join('');
+
+  // Attach event listeners (safe for all category names including spaces/apostrophes)
+  categoryList.querySelectorAll('.category-btn').forEach(btn => {
+    btn.addEventListener('click', () => filterByCategory(btn.dataset.category));
+  });
 }
 
 /**
@@ -274,7 +278,7 @@ function renderCategoryButtons() {
 function filterByCategory(category) {
   const categoryBtns = document.querySelectorAll('.category-btn');
   categoryBtns.forEach(btn => {
-    if ((btn.dataset.category === category && category === 'all') || btn.dataset.category === category) {
+    if (btn.dataset.category === category) {
       btn.className = 'category-btn px-6 py-2.5 rounded-full bg-gradient-to-r from-orange-500 to-rose-500 text-white font-bold text-sm whitespace-nowrap shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5';
     } else {
       btn.className = 'category-btn px-6 py-2.5 rounded-full bg-white border border-gray-200 text-gray-600 font-bold text-sm whitespace-nowrap shadow-sm transition-all hover:shadow-md hover:border-orange-300';
