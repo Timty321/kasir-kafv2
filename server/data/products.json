@@ -4,7 +4,7 @@
     "name": "Sayap",
     "category": "Ayam Original",
     "price": 9000,
-    "stock": 20,
+    "stock": 10,
     "min_stock": 5,
     "date": "2026-03-24"
   },
@@ -13,7 +13,7 @@
     "name": "Paha Bawah",
     "category": "Ayam Original",
     "price": 9500,
-    "stock": 20,
+    "stock": 0,
     "min_stock": 5,
     "date": "2026-03-24"
   },
@@ -22,7 +22,7 @@
     "name": "Paha Atas",
     "category": "Ayam Original",
     "price": 10000,
-    "stock": 20,
+    "stock": 0,
     "min_stock": 5,
     "date": "2026-03-24"
   },
@@ -31,7 +31,7 @@
     "name": "Dada",
     "category": "Ayam Original",
     "price": 10000,
-    "stock": 20,
+    "stock": 0,
     "min_stock": 5,
     "date": "2026-03-24"
   },
@@ -40,7 +40,7 @@
     "name": "Nasi + Sayap",
     "category": "Paket Nasi",
     "price": 12000,
-    "stock": 20,
+    "stock": 0,
     "min_stock": 5,
     "date": "2026-03-24"
   },
@@ -49,7 +49,7 @@
     "name": "Nasi + Paha Bawah",
     "category": "Paket Nasi",
     "price": 13000,
-    "stock": 20,
+    "stock": 0,
     "min_stock": 5,
     "date": "2026-03-24"
   },
@@ -58,7 +58,7 @@
     "name": "Nasi + Paha Atas",
     "category": "Paket Nasi",
     "price": 14000,
-    "stock": 20,
+    "stock": 0,
     "min_stock": 5,
     "date": "2026-03-24"
   },
@@ -67,7 +67,7 @@
     "name": "Nasi + Dada",
     "category": "Paket Nasi",
     "price": 14000,
-    "stock": 20,
+    "stock": 0,
     "min_stock": 5,
     "date": "2026-03-24"
   },
@@ -76,7 +76,7 @@
     "name": "Nasi + Sayap + Teh",
     "category": "Paket Komplit",
     "price": 15500,
-    "stock": 20,
+    "stock": 0,
     "min_stock": 5,
     "date": "2026-03-24"
   },
@@ -85,7 +85,7 @@
     "name": "Nasi + Paha Bawah + Teh",
     "category": "Paket Komplit",
     "price": 15500,
-    "stock": 20,
+    "stock": 0,
     "min_stock": 5,
     "date": "2026-03-24"
   },
@@ -94,7 +94,7 @@
     "name": "Nasi + Paha Atas + Teh",
     "category": "Paket Komplit",
     "price": 17000,
-    "stock": 20,
+    "stock": 0,
     "min_stock": 5,
     "date": "2026-03-24"
   },
@@ -103,7 +103,7 @@
     "name": "Nasi + Dada + Teh",
     "category": "Paket Komplit",
     "price": 17000,
-    "stock": 20,
+    "stock": 0,
     "min_stock": 5,
     "date": "2026-03-24"
   },
@@ -112,7 +112,7 @@
     "name": "Sadas",
     "category": "Extra Topping",
     "price": 3000,
-    "stock": 20,
+    "stock": 0,
     "min_stock": 5,
     "date": "2026-03-24"
   },
@@ -121,7 +121,7 @@
     "name": "Blackpepper",
     "category": "Extra Topping",
     "price": 3000,
-    "stock": 20,
+    "stock": 0,
     "min_stock": 5,
     "date": "2026-03-24"
   },
@@ -130,7 +130,7 @@
     "name": "Keju",
     "category": "Extra Topping",
     "price": 3000,
-    "stock": 20,
+    "stock": 0,
     "min_stock": 5,
     "date": "2026-03-24"
   },
@@ -139,7 +139,7 @@
     "name": "Mentai",
     "category": "Extra Topping",
     "price": 3000,
-    "stock": 20,
+    "stock": 0,
     "min_stock": 5,
     "date": "2026-03-24"
   },
@@ -148,7 +148,7 @@
     "name": "Sambal Geprek",
     "category": "Extra Topping",
     "price": 3000,
-    "stock": 20,
+    "stock": 0,
     "min_stock": 5,
     "date": "2026-03-24"
   },
@@ -157,7 +157,7 @@
     "name": "Nasi Kulit",
     "category": "Menu Lainnya",
     "price": 10000,
-    "stock": 20,
+    "stock": 0,
     "min_stock": 5,
     "date": "2026-03-24"
   },
@@ -166,7 +166,7 @@
     "name": "Kulit Crispy",
     "category": "Side Dish",
     "price": 8000,
-    "stock": 20,
+    "stock": 0,
     "min_stock": 5,
     "date": "2026-03-24"
   },
@@ -175,7 +175,7 @@
     "name": "Nasi Putih",
     "category": "Side Dish",
     "price": 4000,
-    "stock": 20,
+    "stock": 0,
     "min_stock": 5,
     "date": "2026-03-24"
   },
@@ -184,7 +184,7 @@
     "name": "Kentang Goreng",
     "category": "Side Dish",
     "price": 8000,
-    "stock": 20,
+    "stock": 0,
     "min_stock": 5,
     "date": "2026-03-24"
   },
@@ -193,7 +193,7 @@
     "name": "Sadas Cemplung Sayap",
     "category": "Sadas Cemplung",
     "price": 13000,
-    "stock": 20,
+    "stock": 0,
     "min_stock": 5,
     "date": "2026-03-24"
   },
@@ -202,7 +202,7 @@
     "name": "Sadas Cemplung Paha Bawah",
     "category": "Sadas Cemplung",
     "price": 13000,
-    "stock": 20,
+    "stock": 0,
     "min_stock": 5,
     "date": "2026-03-24"
   },
@@ -211,7 +211,7 @@
     "name": "Sadas Cemplung Paha Atas",
     "category": "Sadas Cemplung",
     "price": 15000,
-    "stock": 20,
+    "stock": 0,
     "min_stock": 5,
     "date": "2026-03-24"
   },
@@ -220,7 +220,7 @@
     "name": "Sadas Cemplung Dada",
     "category": "Sadas Cemplung",
     "price": 15000,
-    "stock": 20,
+    "stock": 0,
     "min_stock": 5,
     "date": "2026-03-24"
   },
@@ -229,7 +229,7 @@
     "name": "Sadas Mentai Sayap",
     "category": "Sadas Mentai",
     "price": 13000,
-    "stock": 20,
+    "stock": 0,
     "min_stock": 5,
     "date": "2026-03-24"
   },
@@ -238,7 +238,7 @@
     "name": "Sadas Mentai Paha Bawah",
     "category": "Sadas Mentai",
     "price": 13000,
-    "stock": 20,
+    "stock": 0,
     "min_stock": 5,
     "date": "2026-03-24"
   },
@@ -247,7 +247,7 @@
     "name": "Sadas Mentai Paha Atas",
     "category": "Sadas Mentai",
     "price": 15000,
-    "stock": 20,
+    "stock": 0,
     "min_stock": 5,
     "date": "2026-03-24"
   },
@@ -256,7 +256,7 @@
     "name": "Sadas Mentai Dada",
     "category": "Sadas Mentai",
     "price": 15000,
-    "stock": 20,
+    "stock": 0,
     "min_stock": 5,
     "date": "2026-03-24"
   }

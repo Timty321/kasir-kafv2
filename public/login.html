@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POS KASIR-KAF | Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Outfit', sans-serif;
+    }
+  </style>
+</head>
+
+<body class="bg-gradient-to-br from-orange-100 to-rose-200 min-h-screen flex items-center justify-center p-4">
+
+  <div class="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-2xl w-full max-w-sm border border-white/50">
+    <div class="text-center mb-8">
+      <div
+        class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-orange-500 to-rose-500 text-white rounded-2xl mb-4 shadow-lg">
+        <span class="text-3xl">🍗</span>
+      </div>
+      <h1 class="text-2xl font-extrabold text-gray-800 tracking-tight">KASIR-KAF</h1>
+      <p class="text-sm text-gray-500 font-medium">Sistem Point of Sales</p>
+    </div>
+
+    <form id="loginForm" class="space-y-6">
+      <div>
+        <label class="block text-sm font-bold text-gray-700 mb-2">PIN Akses</label>
+        <input type="password" id="pinInput"
+          class="w-full bg-white border-2 border-gray-200 rounded-xl px-4 py-3 text-center text-2xl tracking-widest font-bold focus:outline-none focus:border-orange-500 focus:ring-4 focus:ring-orange-500/20 transition-all"
+          placeholder="••••" required>
+      </div>
+
+      <button type="submit"
+        class="w-full bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white font-bold py-3 rounded-xl shadow-md hover:shadow-lg transition-all">
+        Masuk Aplikasi
+      </button>
+    </form>
+
+    <div class="mt-6 text-center text-xs text-gray-400 space-y-1">
+      <p>Gunakan PIN Staff atau Owner</p>
+      <p class="font-semibold text-gray-500">Staff 1: 1111 | Staff 2: 2222 | Owner: 463880</p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const pin = document.getElementById('pinInput').value;
+
+      try {
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pin })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          localStorage.setItem('user_role', data.role);
+          if (data.role === 'owner') {
+            window.location.href = '/admin.html';
+          } else {
+            window.location.href = '/';
+          }
+        } else {
+          alert('PIN salah! Silakan coba lagi.');
+          document.getElementById('pinInput').value = '';
+        }
+      } catch (error) {
+        alert('Terjadi kesalahan sistem/jaringan saat menghubungkan ke server.');
+        console.error(error);
+      }
+    });
+  </script>
+</body>
+
+</html>

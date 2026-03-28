@@ -7,7 +7,13 @@ const productsRouter = require('./routes/products');
 const transactionsRouter = require('./routes/transactions');
 const logsRouter = require('./routes/logs');
 const materialsRouter = require('./routes/materials');
+const authRouter = require('./routes/auth');
+const settingsRouter = require('./routes/settings');
+const financeRouter = require('./routes/finance');
+const { initCron } = require('./utils/cron');
 
+// Initiate Daily Automations
+initCron();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -21,6 +27,9 @@ app.use('/api/products', productsRouter);
 app.use('/api/transactions', transactionsRouter);
 app.use('/api/logs', logsRouter);
 app.use('/api/materials', materialsRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/settings', settingsRouter);
+app.use('/api/finance', financeRouter);
 
 // Health check
 app.get('/api/health', (req, res) => {

@@ -1,0 +1,9 @@
+{
+  "autoResetStock": true,
+  "resetTime": "00:00",
+  "staff1Name": "Ovir",
+  "staff1Pin": "1111",
+  "staff2Name": "Karyawan 2",
+  "staff2Pin": "2222",
+  "baseSalary": 1000000
+}

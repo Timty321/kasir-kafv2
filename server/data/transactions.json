@@ -78,5 +78,119 @@
     "amount_paid": 17000,
     "change": 0,
     "timestamp": "2026-03-23T13:17:10.035Z"
+  },
+  {
+    "id": "d5bl2l7i3pcmn45ry5q",
+    "items": [
+      {
+        "product_id": "p_nasi_sayap",
+        "name": "Nasi + Sayap",
+        "qty": 1,
+        "price": 12000
+      },
+      {
+        "product_id": "p_ori_dada",
+        "name": "Dada",
+        "qty": 1,
+        "price": 10000
+      }
+    ],
+    "total": 22000,
+    "payment_method": "CASH",
+    "amount_paid": 22000,
+    "change": 0,
+    "timestamp": "2026-03-24T05:12:50.606Z"
+  },
+  {
+    "id": "g0knhdfquxmn45rzvo",
+    "items": [
+      {
+        "product_id": "p_nasi_sayap",
+        "name": "Nasi + Sayap",
+        "qty": 1,
+        "price": 12000
+      },
+      {
+        "product_id": "p_ori_dada",
+        "name": "Dada",
+        "qty": 1,
+        "price": 10000
+      }
+    ],
+    "total": 22000,
+    "payment_method": "CASH",
+    "amount_paid": 22000,
+    "change": 0,
+    "timestamp": "2026-03-24T05:12:52.836Z"
+  },
+  {
+    "id": "xg3cjhtejkkmn45slmp",
+    "items": [
+      {
+        "product_id": "p_nasi_pb",
+        "name": "Nasi + Paha Bawah",
+        "qty": 1,
+        "price": 13000
+      },
+      {
+        "product_id": "p_nasi_pa",
+        "name": "Nasi + Paha Atas",
+        "qty": 1,
+        "price": 14000
+      }
+    ],
+    "total": 27000,
+    "payment_method": "QRIS",
+    "amount_paid": 27000,
+    "change": 0,
+    "timestamp": "2026-03-24T05:13:21.025Z"
+  },
+  {
+    "id": "0s2rfjeg3mqmn4de5nt",
+    "items": [
+      {
+        "product_id": "p_komp_dada",
+        "name": "Nasi + Dada + Teh",
+        "qty": 1,
+        "price": 17000
+      }
+    ],
+    "total": 17000,
+    "payment_method": "QRIS",
+    "amount_paid": 17000,
+    "change": 0,
+    "timestamp": "2026-03-24T08:46:04.073Z"
+  },
+  {
+    "id": "eu2igxn6n7mn4jhc7v",
+    "items": [
+      {
+        "product_id": "p_nasi_sayap",
+        "name": "Nasi + Sayap",
+        "qty": 3,
+        "price": 12000
+      }
+    ],
+    "total": 36000,
+    "payment_method": "QRIS",
+    "amount_paid": 36000,
+    "change": 0,
+    "timestamp": "2026-03-24T11:36:30.236Z"
+  },
+  {
+    "id": "fv15lkemr36mn8pvyyu",
+    "items": [
+      {
+        "product_id": "p_komp_sayap",
+        "name": "Nasi + Sayap + Teh",
+        "qty": 1,
+        "price": 15500
+      }
+    ],
+    "total": 15500,
+    "payment_method": "CASH",
+    "amount_paid": 15500,
+    "change": 0,
+    "timestamp": "2026-03-27T09:46:55.302Z"
   }
 ]

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { readJSON, writeJSON, getDataPath } = require('../utils/db');
-
+const { sendAdminMessage } = require('../utils/whatsapp');
 function generateId() {
   return Math.random().toString(36).substring(2) + Date.now().toString(36);
 }
@@ -41,7 +41,7 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ error: 'Transaction must have items' });
     }
 
-    if (!payment_method || !['CASH', 'QRIS'].includes(payment_method)) {
+    if (!payment_method || !['CASH', 'QRIS', 'GOJEK', 'GRAB', 'SHOPEE'].includes(payment_method)) {
       return res.status(400).json({ error: 'Invalid payment method' });
     }
 
@@ -122,6 +122,28 @@ router.post('/', async (req, res) => {
       timestamp: new Date().toISOString(),
     });
     await writeJSON(getDataPath('logs.json'), logs);
+
+    // Send WhatsApp notification
+    let waItems = items.map(i => `▪️ ${i.qty}x ${i.name || 'Item'} (Rp${(i.price * i.qty).toLocaleString('id-ID')})`).join('\n');
+    let waMsg = `✅ *NOTA CHECKOUT BERHASIL*\n\nPesanan baru telah dibayarkan.\n\n*Rincian Pesanan:*\n${waItems}\n\n====================\n💰 *Total Bayar:* Rp${parseInt(total).toLocaleString('id-ID')}\n💳 *Metode:* ${payment_method}\n🕒 *Waktu:* ${new Date().toLocaleString('id-ID')}\n====================`;
+    
+    // Overview Stock Report Follow-up
+    let reportMsg = `📊 *OVERVIEW STOK TERKINI*\n`;
+    reportMsg += `\n🍗 *PRODUK/MENU (Paling Menipis):*\n`;
+    const sortedProducts = products.filter(p=>p.stock <= p.min_stock || p.stock < 10).sort((a,b)=>a.stock - b.stock).slice(0, 5);
+    if(sortedProducts.length === 0) reportMsg += `(Seluruh stok Menu dalam keadaan AMAN)\n`;
+    sortedProducts.forEach(p => { reportMsg += `➖ ${p.name}: *${p.stock}*\n`; });
+    
+    reportMsg += `\n📦 *STOK BARANG YANG BARU DIBELI:*\n`;
+    items.forEach(i => {
+       const prd = products.find(p => p.id === i.id);
+       if(prd) reportMsg += `➖ ${prd.name}: *${prd.stock}*\n`;
+    });
+
+    sendAdminMessage(waMsg);
+    setTimeout(() => {
+        sendAdminMessage(reportMsg);
+    }, 1500);
 
     res.status(201).json(newTransaction);
   } catch (error) {

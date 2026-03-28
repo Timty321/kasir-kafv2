@@ -1,37 +1,60 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>POS KASIR-KAF | Admin</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
   <style>
     body {
       font-family: 'Outfit', sans-serif;
       background-color: #f8fafc;
     }
+
     .tab-btn.active {
       color: #ea580c;
     }
+
     .tab-content {
       animation: fadeIn 0.3s ease-in-out;
     }
+
     @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
     }
+
     .low-stock {
       background-color: #fef3c7;
     }
+
     .modal-overlay {
       animation: fadeIn 0.2s ease-in-out;
     }
   </style>
+  <script>
+    if (localStorage.getItem('user_role') !== 'owner') {
+      window.location.href = '/login.html';
+    }
+    function logout() {
+      localStorage.removeItem('user_role');
+      window.location.href = '/login.html';
+    }
+  </script>
 </head>
+
 <body class="bg-gray-100 pb-20">
   <!-- Header -->
-  <div class="bg-gradient-to-r from-orange-500 to-rose-500 text-white p-6 shadow-md sticky top-0 z-20 relative overflow-hidden">
+  <div
+    class="bg-gradient-to-r from-orange-500 to-rose-500 text-white p-6 shadow-md sticky top-0 z-20 relative overflow-hidden">
     <div class="absolute -right-10 -top-10 w-40 h-40 bg-white opacity-10 rounded-full blur-3xl"></div>
     <div class="absolute left-10 -bottom-10 w-32 h-32 bg-orange-300 opacity-20 rounded-full blur-2xl"></div>
     <div class="max-w-7xl mx-auto flex justify-between items-center relative z-10">
@@ -39,36 +62,38 @@
         <h1 class="text-3xl font-extrabold tracking-tight drop-shadow-sm">🍗 KASIR-KAF</h1>
         <p class="text-orange-100 font-medium mt-1 text-sm">Admin Panel Setup</p>
       </div>
-      <a href="/" class="bg-white/20 backdrop-blur-md border border-white/50 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-white hover:text-orange-600 transition-all shadow-sm hover:shadow-md">
-        ← Kembali ke Penjualan
-      </a>
+      <div class="flex gap-2">
+        <a href="/"
+          class="bg-white/20 backdrop-blur-md border border-white/50 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-white hover:text-orange-600 transition-all shadow-sm hover:shadow-md">
+          ← Penjualan
+        </a>
+        <button onclick="logout()"
+          class="bg-white/20 backdrop-blur-md border border-white/50 text-white px-4 py-2.5 rounded-xl font-bold hover:bg-white hover:text-orange-600 transition-all shadow-sm">
+          Keluar
+        </button>
+      </div>
     </div>
   </div>
 
   <!-- Tab Navigation -->
   <div class="bg-white border-b sticky top-16 z-10">
     <div class="max-w-7xl mx-auto flex">
-      <button
-        class="tab-btn px-6 py-3 font-semibold text-gray-600 hover:text-orange-600 transition"
-        onclick="switchTab('inventory')"
-        data-tab="inventory"
-      >
+      <button class="tab-btn px-6 py-3 font-semibold text-gray-600 hover:text-orange-600 transition"
+        onclick="switchTab('inventory')" data-tab="inventory">
         📦 Inventori
       </button>
-      <button
-        class="tab-btn px-6 py-3 font-semibold text-gray-600 hover:text-orange-600 transition"
-        onclick="switchTab('materials')"
-        data-tab="materials"
-      >
+      <button class="tab-btn px-6 py-3 font-semibold text-gray-600 hover:text-orange-600 transition"
+        onclick="switchTab('materials')" data-tab="materials">
         📋 Bahan
       </button>
-      <button
-        class="tab-btn px-6 py-3 font-semibold text-gray-600 hover:text-orange-600 transition"
-        onclick="switchTab('history')"
-        data-tab="history"
-      >
+      <button class="tab-btn px-6 py-3 font-semibold text-gray-600 hover:text-orange-600 transition"
+        onclick="switchTab('history')" data-tab="history">
         📊 Riwayat
       </button>
+      <a href="/finance.html"
+        class="tab-btn px-6 py-3 font-semibold text-gray-600 hover:text-orange-600 transition flex items-center">
+        💰 Keuangan
+      </a>
     </div>
   </div>
 
@@ -79,23 +104,16 @@
       <!-- Add Product Button and Filters -->
       <div class="mb-6 flex flex-col gap-4 md:flex-row md:justify-between md:items-center">
         <div class="flex gap-2">
-          <input
-            type="date"
-            id="inventoryDate"
-            class="border border-gray-200 rounded-xl px-4 py-2 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition"
-          >
-          <button
-            onclick="filterInventory()"
-            class="bg-gray-800 hover:bg-gray-900 text-white px-5 py-2 rounded-xl font-semibold shadow-sm hover:shadow-md transition-all"
-          >
+          <input type="date" id="inventoryDate"
+            class="border border-gray-200 rounded-xl px-4 py-2 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition">
+          <button onclick="filterInventory()"
+            class="bg-gray-800 hover:bg-gray-900 text-white px-5 py-2 rounded-xl font-semibold shadow-sm hover:shadow-md transition-all">
             🔍 Filter
           </button>
         </div>
-        <button
-          id="addProductBtn"
+        <button id="addProductBtn"
           class="bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white px-6 py-2 rounded-xl font-bold shadow-md hover:shadow-lg transition-all"
-          onclick="openAddProductModal()"
-        >
+          onclick="openAddProductModal()">
           ➕ Tambah Produk
         </button>
       </div>
@@ -127,23 +145,16 @@
       <!-- Add Material Button and Filters -->
       <div class="mb-6 flex flex-col gap-4 md:flex-row md:justify-between md:items-center">
         <div class="flex gap-2">
-          <input
-            type="date"
-            id="materialsDate"
-            class="border-2 border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-orange-600"
-          >
-          <button
-            onclick="filterMaterials()"
-            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition"
-          >
+          <input type="date" id="materialsDate"
+            class="border-2 border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-orange-600">
+          <button onclick="filterMaterials()"
+            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition">
             🔍 Filter
           </button>
         </div>
-        <button
-          id="addMaterialBtn"
+        <button id="addMaterialBtn"
           class="bg-orange-600 hover:bg-orange-700 text-white px-6 py-2 rounded-lg font-semibold transition"
-          onclick="openAddMaterialModal()"
-        >
+          onclick="openAddMaterialModal()">
           ➕ Tambah Bahan
         </button>
       </div>
@@ -175,23 +186,16 @@
       <!-- Filter Section -->
       <div class="mb-6 flex flex-col gap-4 md:flex-row md:justify-between md:items-center">
         <div class="flex gap-2 flex-col md:flex-row">
-          <select
-            id="logType"
-            class="border-2 border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-orange-600"
-          >
+          <select id="logType"
+            class="border-2 border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-orange-600">
             <option value="">Semua Aktivitas</option>
             <option value="inventory">📦 Inventori</option>
             <option value="transaction">💳 Transaksi</option>
           </select>
-          <input
-            type="date"
-            id="logDate"
-            class="border-2 border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-orange-600"
-          >
-          <button
-            onclick="filterLogs()"
-            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition"
-          >
+          <input type="date" id="logDate"
+            class="border-2 border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-orange-600">
+          <button onclick="filterLogs()"
+            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition">
             🔍 Filter
           </button>
         </div>
@@ -230,12 +234,14 @@
       <div class="p-6 space-y-4">
         <div>
           <label class="block font-semibold text-gray-700 mb-2">Nama Produk</label>
-          <input type="text" id="productName" class="w-full border-2 border-gray-300 rounded-lg p-3 focus:outline-none focus:border-orange-600">
+          <input type="text" id="productName"
+            class="w-full border-2 border-gray-300 rounded-lg p-3 focus:outline-none focus:border-orange-600">
         </div>
 
         <div>
           <label class="block font-semibold text-gray-700 mb-2">Kategori</label>
-          <select id="productCategory" class="w-full border-2 border-gray-300 rounded-lg p-3 focus:outline-none focus:border-orange-600">
+          <select id="productCategory"
+            class="w-full border-2 border-gray-300 rounded-lg p-3 focus:outline-none focus:border-orange-600">
             <option value="">-- Pilih Kategori --</option>
           </select>
         </div>
@@ -243,25 +249,27 @@
         <div class="grid grid-cols-2 gap-4">
           <div>
             <label class="block font-semibold text-gray-700 mb-2">Harga (Rp)</label>
-            <input type="number" id="productPrice" class="w-full border-2 border-gray-300 rounded-lg p-3 focus:outline-none focus:border-orange-600" min="0">
+            <input type="number" id="productPrice"
+              class="w-full border-2 border-gray-300 rounded-lg p-3 focus:outline-none focus:border-orange-600" min="0">
           </div>
 
           <div>
             <label class="block font-semibold text-gray-700 mb-2">Stok</label>
-            <input type="number" id="productStock" class="w-full border-2 border-gray-300 rounded-lg p-3 focus:outline-none focus:border-orange-600" min="0">
+            <input type="number" id="productStock"
+              class="w-full border-2 border-gray-300 rounded-lg p-3 focus:outline-none focus:border-orange-600" min="0">
           </div>
         </div>
 
         <div>
           <label class="block font-semibold text-gray-700 mb-2">Stok Minimum</label>
-          <input type="number" id="productMinStock" class="w-full border-2 border-gray-300 rounded-lg p-3 focus:outline-none focus:border-orange-600" min="0" value="5">
+          <input type="number" id="productMinStock"
+            class="w-full border-2 border-gray-300 rounded-lg p-3 focus:outline-none focus:border-orange-600" min="0"
+            value="5">
         </div>
 
-        <button
-          id="saveProductBtn"
+        <button id="saveProductBtn"
           class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition mt-6"
-          onclick="saveProduct()"
-        >
+          onclick="saveProduct()">
           ✓ Simpan Produk
         </button>
       </div>
@@ -278,16 +286,12 @@
         <p class="text-gray-600 mb-6">Produk yang dihapus tidak bisa dikembalikan.</p>
 
         <div class="flex gap-3">
-          <button
-            onclick="closeDeleteModal()"
-            class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 rounded-lg transition"
-          >
+          <button onclick="closeDeleteModal()"
+            class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 rounded-lg transition">
             ✕ Batal
           </button>
-          <button
-            onclick="confirmDelete()"
-            class="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 rounded-lg transition"
-          >
+          <button onclick="confirmDelete()"
+            class="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 rounded-lg transition">
             🗑️ Hapus
           </button>
         </div>
@@ -296,7 +300,8 @@
   </div>
 
   <!-- Material Modal -->
-  <div id="materialModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 overflow-y-auto">
+  <div id="materialModal"
+    class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 overflow-y-auto">
     <div class="modal-overlay absolute inset-0" onclick="closeMaterialModal()"></div>
     <div class="relative bg-white rounded-lg shadow-2xl w-full max-w-md m-4 my-8">
       <div class="flex justify-between items-center p-6 border-b border-gray-200">
@@ -309,12 +314,15 @@
 
         <div>
           <label class="block font-semibold text-gray-700 mb-2">Nama Bahan *</label>
-          <input type="text" id="materialName" class="w-full border-2 border-gray-300 rounded-lg p-3 focus:outline-none focus:border-orange-600" placeholder="Contoh: Saos Tomat">
+          <input type="text" id="materialName"
+            class="w-full border-2 border-gray-300 rounded-lg p-3 focus:outline-none focus:border-orange-600"
+            placeholder="Contoh: Saos Tomat">
         </div>
 
         <div>
           <label class="block font-semibold text-gray-700 mb-2">Kategori *</label>
-          <select id="materialCategory" class="w-full border-2 border-gray-300 rounded-lg p-3 focus:outline-none focus:border-orange-600">
+          <select id="materialCategory"
+            class="w-full border-2 border-gray-300 rounded-lg p-3 focus:outline-none focus:border-orange-600">
             <option value="">Pilih Kategori</option>
             <option value="Saos">Saos</option>
             <option value="Kemasan Ayam">Kemasan Ayam</option>
@@ -327,7 +335,8 @@
 
         <div>
           <label class="block font-semibold text-gray-700 mb-2">Satuan *</label>
-          <select id="materialUnit" class="w-full border-2 border-gray-300 rounded-lg p-3 focus:outline-none focus:border-orange-600">
+          <select id="materialUnit"
+            class="w-full border-2 border-gray-300 rounded-lg p-3 focus:outline-none focus:border-orange-600">
             <option value="">Pilih Satuan</option>
             <option value="Botol">Botol</option>
             <option value="Lembar">Lembar</option>
@@ -339,57 +348,30 @@
         <div class="grid grid-cols-2 gap-4">
           <div>
             <label class="block font-semibold text-gray-700 mb-2">Stok</label>
-            <input type="number" id="materialStock" class="w-full border-2 border-gray-300 rounded-lg p-3 focus:outline-none focus:border-orange-600" min="0" value="0">
+            <input type="number" id="materialStock"
+              class="w-full border-2 border-gray-300 rounded-lg p-3 focus:outline-none focus:border-orange-600" min="0"
+              value="0">
           </div>
 
           <div>
             <label class="block font-semibold text-gray-700 mb-2">Stok Minimum</label>
-            <input type="number" id="materialMinStock" class="w-full border-2 border-gray-300 rounded-lg p-3 focus:outline-none focus:border-orange-600" min="0" value="10">
+            <input type="number" id="materialMinStock"
+              class="w-full border-2 border-gray-300 rounded-lg p-3 focus:outline-none focus:border-orange-600" min="0"
+              value="10">
           </div>
         </div>
       </div>
 
       <div class="p-6 border-t border-gray-200 flex gap-3">
-        <button
-          onclick="closeMaterialModal()"
-          class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 rounded-lg transition"
-        >
+        <button onclick="closeMaterialModal()"
+          class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 rounded-lg transition">
           ✕ Batal
         </button>
-        <button
-          id="saveMaterialBtn"
+        <button id="saveMaterialBtn"
           class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-2 rounded-lg transition"
-          onclick="saveMaterial()"
-        >
+          onclick="saveMaterial()">
           ✓ Simpan Bahan
         </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Delete Material Modal -->
-  <div id="deleteMaterialModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-    <div class="modal-overlay absolute inset-0" onclick="closeDeleteMaterialModal()"></div>
-    <div class="relative bg-white rounded-lg shadow-2xl w-full max-w-sm m-4">
-      <div class="p-6 text-center">
-        <p class="text-2xl mb-4">⚠️</p>
-        <h2 class="text-lg font-bold mb-4">Apakah Anda yakin?</h2>
-        <p class="text-gray-600 mb-6">Bahan yang dihapus tidak bisa dikembalikan.</p>
-
-        <div class="flex gap-3">
-          <button
-            onclick="closeDeleteMaterialModal()"
-            class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 rounded-lg transition"
-          >
-            ✕ Batal
-          </button>
-          <button
-            onclick="confirmDeleteMaterial()"
-            class="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 rounded-lg transition"
-          >
-            🗑️ Hapus
-          </button>
-        </div>
       </div>
     </div>
   </div>
@@ -400,7 +382,8 @@
       <a href="/" class="flex-1 py-3 text-center text-gray-600 font-semibold">
         🏪 Penjualan
       </a>
-      <button onclick="switchTab('inventory')" class="flex-1 py-3 text-center text-orange-600 border-t-2 border-orange-600 font-semibold">
+      <button onclick="switchTab('inventory')"
+        class="flex-1 py-3 text-center text-orange-600 border-t-2 border-orange-600 font-semibold">
         📦 Inventori
       </button>
       <button onclick="switchTab('history')" class="flex-1 py-3 text-center text-gray-600 font-semibold">
@@ -424,4 +407,5 @@
 
   <script src="/js/app.js"></script>
 </body>
+
 </html>
